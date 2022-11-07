@@ -1,6 +1,6 @@
 package com.ranga.consumer;
 
-import com.ranga.AppConfig;
+import com.ranga.util.AppConfig;
 import com.ranga.util.PropertyUtil;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

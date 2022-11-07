@@ -1,6 +1,6 @@
 package com.ranga.producer;
 
-import com.ranga.AppConfig;
+import com.ranga.util.AppConfig;
 import com.ranga.util.PropertyUtil;
 import org.apache.kafka.clients.admin.Admin;
 import org.apache.kafka.clients.admin.NewTopic;

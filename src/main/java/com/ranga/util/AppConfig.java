@@ -1,14 +1,14 @@
-package com.ranga;
+package com.ranga.util;
 
 import java.util.Properties;
 
 public class AppConfig {
 
-    private Properties properties;
-    private String bootstrapServers;
-    private String topicName;
-    private String consumerGroupId = "my_consumer";
-    private String autoOffsetResetConfig = "earliest";
+    private final Properties properties;
+    private final String bootstrapServers;
+    private final String topicName;
+    private final String consumerGroupId = "my_consumer";
+    private final String autoOffsetResetConfig = "earliest";
 
     public AppConfig(Properties properties) {
         this.properties = properties;

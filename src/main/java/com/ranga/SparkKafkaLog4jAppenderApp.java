@@ -7,6 +7,7 @@ import org.apache.spark.sql.SparkSession;
 public class SparkKafkaLog4jAppenderApp {
 
     private static final Logger logger = Logger.getLogger("kafkaLogger");
+
     public static void main(String[] args) {
 
         // Creating the SparkConf object

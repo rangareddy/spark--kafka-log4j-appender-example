@@ -18,8 +18,9 @@
         <junit.version>4.12</junit.version>
         <slf4j.version>1.7.30</slf4j.version>
         <kafka.version>2.5.0.7.1.7.1000-141</kafka.version>
+        <kafka.scope>provided</kafka.scope>
         <spark.version>2.4.7.7.1.7.1000-141</spark.version>
-        <spark.scope>compile</spark.scope>
+        <spark.scope>provided</spark.scope>
         <scala.binary.version>2.11</scala.binary.version>
     </properties>
 
@@ -37,12 +38,14 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-log4j-appender</artifactId>
             <version>${kafka.version}</version>
+            <scope>${kafka.scope}</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>${kafka.version}</version>
+            <scope>${kafka.scope}</scope>
         </dependency>
 
         <dependency>

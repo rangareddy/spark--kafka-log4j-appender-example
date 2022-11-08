@@ -19,13 +19,13 @@ public class MyKafkaProducer {
 
     private static final Logger logger = Logger.getLogger("kafkaLogger");
 
-    public static void createTopic(String bootstrapServer, String topicName) {
-        Properties properties = new Properties();
-        properties.put("bootstrap.servers", bootstrapServer);
-        Admin admin = Admin.create(properties);
+    public static void createTopic(AppConfig appConfig) {
+        Properties kafkaProperties = new Properties();
+        kafkaProperties.put("bootstrap.servers", appConfig.getBootstrapServers());
+        Admin admin = Admin.create(kafkaProperties);
         try {
-            if (!admin.listTopics().names().get().contains(topicName)) {
-                admin.createTopics(Collections.singleton(new NewTopic(topicName, 1, (short) 1))).all().get();
+            if (!admin.listTopics().names().get().contains(appConfig.getTopicName())) {
+                admin.createTopics(Collections.singleton(new NewTopic(appConfig.getTopicName(), 1, (short) 1))).all().get();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -35,6 +35,7 @@ public class MyKafkaProducer {
     public static void main(String[] args) {
         Properties properties = PropertyUtil.getProperties();
         AppConfig appConfig = new AppConfig(properties);
+        //createTopic(appConfig);
         Producer<String, String> producer = getProducer(appConfig.getBootstrapServers());
         String message = new Date() + "Hello World!";
         ProducerRecord<String, String> record = new ProducerRecord<>(appConfig.getTopicName(), message);
@@ -44,10 +45,10 @@ public class MyKafkaProducer {
     }
 
     public static Producer<String, String> getProducer(String bootstrapServers) {
-        Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        return new KafkaProducer<>(props);
+        Properties kafkaProperties = new Properties();
+        kafkaProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        kafkaProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        kafkaProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        return new KafkaProducer<>(kafkaProperties);
     }
 }

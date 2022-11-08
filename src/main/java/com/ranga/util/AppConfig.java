@@ -42,3 +42,5 @@ public class AppConfig {
                 '}';
     }
 }
+
+// https://github.com/duhanmin/log-router/blob/master/src/main/java/io/github/duhanmin/router/log/kafka/log4j/KafkaLog4jAppender.java

@@ -57,25 +57,26 @@ git clone https://github.com/rangareddy/spark-kafka-log4j-appender-example.git
 cd /root/spark-kafka-log4j-appender-example
 ```
 
-### Step4: Build the project
+### Step4: Update the spark and kafka dependencies in pom.xml. In my case spark version is 2.4.7.7.1.7.1000-141 and kafka version is 2.5.0.7.1.7.1000-141
+
+```shell
+<spark.version>2.4.7.7.1.7.1000-141</spark.version>
+<kafka.version>2.5.0.7.1.7.1000-141</kafka.version>
+```
+
+### Step5: Build the project
 
 ```sh
 mvn clean package -DskipTests
 ```
 
-### Step5: Copy the jar file to edge node temporary location.
+### Step6: Copy the jar file to edge node temporary location.
 
 ```sh
 scp target/spark-kafka-log4j-appender-example-1.0.0-SNAPSHOT.jar root@hostname:/tmp
 ```
 
-### Step6: Submit the Spark Application
-
-```sh
-KAFKA_JARS=/opt/cloudera/parcels/CDH/jars/kafka-clients-2.5.0.7.1.7.1000-141.jar,/opt/cloudera/parcels/CDH/jars/kafka-log4j-appender-2.5.0.7.1.7.1000-141.jar
-```
-
-> According to your cluster you need to update the `kafka-clients` and `kafka-log4j-appender` paths.
+### Step7: Submit the Spark Application
 
 #### 1. Client Mode
 
@@ -83,11 +84,10 @@ KAFKA_JARS=/opt/cloudera/parcels/CDH/jars/kafka-clients-2.5.0.7.1.7.1000-141.jar
 spark-submit \
     --master yarn \
     --deploy-mode client \
-    --class-name com.ranga.SparkKafkaLog4jAppenderApp \
-    --jars  $KAFKA_JARS \
+    --class com.ranga.SparkKafkaLog4jAppenderApp \
     --files /tmp/spark-log4j.properties  \
-    --conf spark.driver.extraJavaOptions="-Dlog4j.configuration=/tmp/spark-log4j.properties" \
-    --conf spark.executor.extraJavaOptions="-Dlog4j.configuration=spark-log4j.properties" \
+    --driver-java-options "-Dlog4j.configuration=/tmp/spark-log4j.properties -verbose:class" \
+    --conf spark.executor.extraJavaOptions="-Dlog4j.configuration=spark-log4j.properties -verbose:class" \
     /tmp/spark-kafka-log4j-appender-example-1.0.0-SNAPSHOT.jar
 ```
 
@@ -97,15 +97,26 @@ spark-submit \
 spark-submit \
     --master yarn \
     --deploy-mode cluster \
-    --class-name com.ranga.SparkKafkaLog4jAppenderApp \
-    --jars  $KAFKA_JARS \
+    --class com.ranga.SparkKafkaLog4jAppenderApp \
     --files /tmp/spark-log4j.properties  \
-    --conf spark.driver.extraJavaOptions="-Dlog4j.configuration=spark-log4j.properties" \
-    --conf spark.executor.extraJavaOptions="-Dlog4j.configuration=spark-log4j.properties" \
+    --conf spark.driver.extraJavaOptions="-Dlog4j.configuration=spark-log4j.properties -verbose:class" \
+    --conf spark.executor.extraJavaOptions="-Dlog4j.configuration=spark-log4j.properties -verbose:class" \
     /tmp/spark-kafka-log4j-appender-example-1.0.0-SNAPSHOT.jar
 ```
 
-### Step7: Verify the log messages are written to Kafka topic `spark_kafka_log4j_topic`
+**Output:** 
+
+You will see similar to following output
+
+```shell
+2022/11/08 12:47:18 INFO  kafkaLogger:19 SparkSession created successfully
+
+2022/11/08 16:01:43 INFO  kafkaLogger:17 SparkSession created successfully
+
+2022/11/08 16:10:37 INFO  kafkaLogger:20 Spark count value : 100
+```
+
+### Step8: Verify the log messages are written to Kafka topic `spark_kafka_log4j_topic`
 
 ```sh
 $ kafka-console-consumer --bootstrap-server `hostname -f`:9092 --topic spark_kafka_log4j_topic --from-beginning

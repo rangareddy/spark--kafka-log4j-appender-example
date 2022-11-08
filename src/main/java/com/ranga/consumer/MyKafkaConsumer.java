@@ -33,7 +33,7 @@ public class MyKafkaConsumer {
 
         try (Consumer<String, String> consumer = getConsumer(appConfig)) {
             while (true) {
-                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMinutes(1));
+                ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(30));
                 System.out.println("Total Records : " + records.count());
                 records.forEach(record -> {
                     System.out.println("Record Key " + record.key());

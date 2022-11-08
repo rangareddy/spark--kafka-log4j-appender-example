@@ -2,9 +2,9 @@
 
 This project demonstrates the how to integrate Spark with KafkaLog4jAppender.
 
-## Test the code using Spark
+## Test the code using Spark submit
 
-### Step1: Create the Kafka topic `spark_kafka_log4j_topic` and verify it is successfully created or not.
+### Step1: Create the Kafka topic `spark_kafka_log4j_topic`
 
 ```sh
 $ kafka-topics --create --bootstrap-server `hostname -f`:9092 --replication-factor 1 --partitions 3 --topic spark_kafka_log4j_topic
@@ -13,7 +13,7 @@ $ kafka-topics --list --bootstrap-server `hostname -f`:9092
 
 ### Step2: Creating the custom log4j configuration
 
-vi /tmp/spark-log4j.properties
+`vi /tmp/spark-log4j.properties`
 
 ```properties
 # Root logger option
@@ -124,17 +124,25 @@ $ kafka-console-consumer --bootstrap-server `hostname -f`:9092 --topic spark_kaf
 
 ## Test the code from local
 
-### Step1: In pom.xml update the `kafka, spark` version according to your cluster and update the scope to `compile`.
+### Step1: 
 
-### Step2: In update th brokerList in log4j.properties (src/main/resources/log4j.properties)
+In pom.xml update the `kafka, spark` version according to your cluster and update the scope to `compile`.
 
-### Step3: Run the following code to produce the Kafka messages
+### Step2: 
+
+In update th brokerList in log4j.properties (src/main/resources/log4j.properties)
+
+### Step3: 
+
+Run the following code to produce the Kafka messages
 
 ```sh
 java -jar target/spark-kafka-log4j-appender-example-1.0.0-SNAPSHOT.jar com.ranga.SparkKafkaLog4jAppenderApp
 ```
 
-### Step4: Run the following Consumer code to consume Kafka messages
+### Step4: 
+
+Run the following Consumer code to consume Kafka messages
 
 ```sh
 java -jar target/spark-kafka-log4j-appender-example-1.0.0-SNAPSHOT.jar com.ranga.consumer.MyKafkaConsumer

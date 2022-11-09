@@ -48,6 +48,10 @@ log4j.logger.com.ranga=INFO
 log4j.appender.KAFKA.brokerList=localhost:9092
 ```
 
+The configuration item `log4j.appender.KAFKA.*` matches the variable name in the figure
+
+!["Kafka Patterns"](images/kafka_appender_pattern.png)
+   
 > In spark-log4j.properties, don't add KAFKA appender to rootLoger. It will throw the **org.apache.kafka.common.errors.TimeoutException: Topic spark_kafka_log4j_topic not present in metadata after 60000 ms** error.
 
 ### Step3: Download the project
@@ -77,6 +81,12 @@ scp target/spark-kafka-log4j-appender-example-1.0.0-SNAPSHOT.jar root@hostname:/
 ```
 
 ### Step7: Submit the Spark Application
+
+Copy the `kafka-log4j-appender.jar` to each machine in the cluster.
+
+```sh
+cp /opt/cloudera/parcels/CDH/jars/kafka-log4j-appender-2.5.0.7.1.7.1000-141.jar /opt/cloudera/parcels/CDH/lib/spark/jars/
+```
 
 #### 1. Client Mode
 

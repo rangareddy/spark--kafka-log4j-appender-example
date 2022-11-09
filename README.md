@@ -61,7 +61,9 @@ git clone https://github.com/rangareddy/spark-kafka-log4j-appender-example.git
 cd /root/spark-kafka-log4j-appender-example
 ```
 
-### Step4: Update the spark and kafka dependencies in pom.xml. In my case spark version is 2.4.7.7.1.7.1000-141 and kafka version is 2.5.0.7.1.7.1000-141
+### Step4: Update the spark and kafka dependencies in pom.xml. 
+
+In my case spark version is 2.4.7.7.1.7.1000-141 and kafka version is 2.5.0.7.1.7.1000-141
 
 ```shell
 <spark.version>2.4.7.7.1.7.1000-141</spark.version>

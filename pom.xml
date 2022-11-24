@@ -20,7 +20,7 @@
         <spark.scope>compile</spark.scope>
         <kafka.scope>compile</kafka.scope>
         <scala.binary.version>2.11</scala.binary.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13</junit.version>
     </properties>
 
     <repositories>
@@ -38,6 +38,12 @@
             <artifactId>spark-core_${scala.binary.version}</artifactId>
             <version>${spark.version}</version>
             <scope>${spark.scope}</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -45,6 +51,12 @@
             <artifactId>spark-sql_${scala.binary.version}</artifactId>
             <version>${spark.version}</version>
             <scope>${spark.scope}</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

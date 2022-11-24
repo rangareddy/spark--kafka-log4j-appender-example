@@ -6,7 +6,8 @@ import org.apache.spark.sql.SparkSession;
 
 public class SparkKafkaLog4jAppenderApp {
 
-    private static final Logger logger = Logger.getLogger("kafkaLogger");
+    private static final Logger kafkaLogger = Logger.getLogger("kafkaLogger");
+    private static final Logger logger = Logger.getLogger(SparkKafkaLog4jAppenderApp.class);
 
     public static void main(String[] args) {
 
@@ -18,7 +19,7 @@ public class SparkKafkaLog4jAppenderApp {
         logger.info("SparkSession created successfully");
 
         long count = spark.range(1, 101).count();
-        logger.info("Spark count value : " + count);
+        kafkaLogger.info("Spark count value : " + count);
 
         // Close the SparkSession
         spark.close();

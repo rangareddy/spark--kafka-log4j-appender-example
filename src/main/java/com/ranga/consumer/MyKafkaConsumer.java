@@ -38,7 +38,9 @@ public class MyKafkaConsumer {
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(30));
                 logger.info("Total Records : " + records.count());
+                System.out.println("Total Records : " + records.count());
                 records.forEach(record -> {
+                    System.out.println("Record value " + record.value());
                     logger.info("Record Key " + record.key());
                     logger.info("Record value " + record.value());
                     logger.info("Record partition " + record.partition());
